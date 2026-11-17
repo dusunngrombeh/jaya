@@ -378,21 +378,27 @@
       </div>
     </section>
 
-       <!-- 6. SECTION ARSIP BERITA DUSUN -->
-    <section id="sec-berita" data-section-id="berita" class="scroll-mt-24">
-      <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kabar & Dokumentasi</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Arsip Berita & Kegiatan Warga</h2>
-      </div>
-      <!-- Daftar Berita (Maksimal 3 per Halaman) -->
-      <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Diisi JS -->
-      </div>
-      <!-- Tombol Nomor Halaman (Pagination) -->
-      <div id="berita-pagination" class="mt-8 flex items-center justify-center gap-2">
-        <!-- Diisi JS -->
-      </div>
-    </section>
+<!-- 6. SECTION ARSIP BERITA DUSUN -->
+<section id="sec-berita" data-section-id="berita" class="scroll-mt-24">
+  <div class="mb-8">
+    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
+      Kabar & Dokumentasi
+    </span>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">
+      Arsip Berita & Kegiatan Warga
+    </h2>
+  </div>
+
+  <!-- Daftar Berita (Maksimal 3 per Halaman) -->
+  <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Diisi otomatis oleh JavaScript -->
+  </div>
+
+  <!-- Navigasi Nomor Halaman (Pagination) -->
+  <div id="pagination-berita" class="mt-8 flex justify-center items-center gap-2">
+    <!-- Tombol nomor urut halaman akan muncul di sini -->
+  </div>
+</section>
 
     <!-- 7. SECTION STRUKTUR ORGANISASI DUSUN -->
     <section id="sec-struktur" data-section-id="struktur" class="scroll-mt-24">
@@ -969,96 +975,142 @@
       `).join('');
     }
 
-       let currentBeritaPage = 1;
-    const beritaPerPage = 3;
+ // Data Arsip Berita & Kegiatan Warga
+const dataBerita = [
+  { 
+    judul: "Kerja Bakti Pembersihan Saluran Irigasi", 
+    tanggal: "10 Nov 2026", 
+    ringkasan: "Warga bergotong-royong membersihkan saluran air menjelang musim hujan.", 
+    gambar: "gambar1.jpg" 
+  },
+  { 
+    judul: "Posyandu Balita & Lansia Rutin", 
+    tanggal: "05 Nov 2026", 
+    ringkasan: "Pemeriksaan kesehatan gratis dan pemberian makanan tambahan di balai dusun.", 
+    gambar: "gambar2.jpg" 
+  },
+  { 
+    judul: "Pelatihan UMKM Olahan Hasil Kebun", 
+    tanggal: "28 Okt 2026", 
+    ringkasan: "Peningkatan keterampilan ibu-ibu PKK dalam mengemas produk lokal.", 
+    gambar: "gambar3.jpg" 
+  },
+  { 
+    judul: "Rapat Koordinasi Persiapan HUT Dusun", 
+    tanggal: "20 Okt 2026", 
+    ringkasan: "Pembentukan panitia dan penyusunan jadwal lomba antar RT.", 
+    gambar: "gambar4.jpg" 
+  },
+  { 
+    judul: "Penyaluran Bantuan Bibit Tanaman", 
+    tanggal: "12 Okt 2026", 
+    ringkasan: "Pembagian bibit cabai dan terong untuk pemanfaatan pekarangan rumah.", 
+    gambar: "gambar5.jpg" 
+  }
+];
 
-    function renderBerita() {
-      const grid = document.getElementById('grid-berita');
-      const paginationContainer = document.getElementById('berita-pagination');
-      const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
-      
-      const totalPages = Math.ceil(sorted.length / beritaPerPage) || 1;
-      if (currentBeritaPage > totalPages) currentBeritaPage = totalPages;
+// Konfigurasi Pagination
+const beritaPerHalaman = 3; // Maksimal 3 berita per halaman
+let halamanSaatIni = 1;
 
-      const startIndex = (currentBeritaPage - 1) * beritaPerPage;
-      const currentItems = sorted.slice(startIndex, startIndex + beritaPerPage);
+// Fungsi Utama Menampilkan Berita
+function tampilkanBerita(halaman) {
+  halamanSaatIni = halaman;
+  const gridBerita = document.getElementById("grid-berita");
+  
+  if (!gridBerita) return; // Mencegah error jika elemen tidak ditemukan
+  gridBerita.innerHTML = "";
 
-      // Render 3 berita di halaman aktif
-      grid.innerHTML = currentItems.length ? currentItems.map((b, relativeIdx) => {
-        const absoluteIdx = startIndex + relativeIdx;
-        return `
-          <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
-            <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <span class="text-[11px] font-bold text-emerald-700"><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
-                <h3 class="font-extrabold text-slate-900 text-base mt-1.5 line-clamp-2">${b.judul}</h3>
-                <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${b.ringkasan}</p>
-              </div>
-              <button onclick="openBeritaDetail(${absoluteIdx})" class="mt-4 text-left text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
-                Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-          </article>
-        `;
-      }).join('') : `<div class="col-span-3 text-center text-slate-400 text-xs py-8">Belum ada berita yang diunggah.</div>`;
+  // Hitung data yang akan di-slice per halaman
+  const indeksAwal = (halaman - 1) * beritaPerHalaman;
+  const indeksAkhir = indeksAwal + beritaPerHalaman;
+  const beritaTampil = dataBerita.slice(indeksAwal, indeksAkhir);
 
-      // Render tombol nomor halaman (Pagination)
-      if (totalPages > 1) {
-        let pagesHtml = '';
-        // Tombol Sebelumnya
-        pagesHtml += `<button onclick="changeBeritaPage(${currentBeritaPage - 1})" ${currentBeritaPage === 1 ? 'disabled class="px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-2 rounded-xl bg-white border border-emerald-200 text-emerald-900 text-xs font-bold hover:bg-emerald-50"'}>&laquo; Prev</button>`;
+  // Render kartu berita ke dalam HTML
+  beritaTampil.forEach((item, index) => {
+    const nomorUrut = indeksAwal + index + 1;
 
-        // Nomor Halaman
-        for (let i = 1; i <= totalPages; i++) {
-          const isActive = i === currentBeritaPage;
-          pagesHtml += `<button onclick="changeBeritaPage(${i})" class="w-9 h-9 rounded-xl text-xs font-bold transition ${isActive ? 'bg-emerald-800 text-white shadow-md' : 'bg-white border border-emerald-200 text-emerald-900 hover:bg-emerald-50'}">${i}</button>`;
-        }
-
-        // Tombol Berikutnya
-        pagesHtml += `<button onclick="changeBeritaPage(${currentBeritaPage + 1})" ${currentBeritaPage === totalPages ? 'disabled class="px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-2 rounded-xl bg-white border border-emerald-200 text-emerald-900 text-xs font-bold hover:bg-emerald-50"'}>Next &raquo;</button>`;
-        
-        paginationContainer.innerHTML = pagesHtml;
-        paginationContainer.classList.remove('hidden');
-      } else {
-        paginationContainer.innerHTML = '';
-        paginationContainer.classList.add('hidden');
-      }
-    }
-
-    function changeBeritaPage(page) {
-      currentBeritaPage = page;
-      renderBerita();
-      // Scroll halus otomatis kembali ke judul berita saat tombol halaman diklik
-      document.getElementById('sec-berita').scrollIntoView({ behavior: 'smooth' });
-    }
-
-        <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
-          <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
-          <div class="p-5 flex-1 flex flex-col justify-between">
-            <div>
-              <span class="text-[11px] font-bold text-emerald-700"><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
-              <h3 class="font-extrabold text-slate-900 text-base mt-1.5 line-clamp-2">${b.judul}</h3>
-              <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${b.ringkasan}</p>
-            </div>
-            <button onclick="openBeritaDetail(${idx})" class="mt-4 text-left text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
-              Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
-            </button>
+    const card = `
+      <article class="bg-white rounded-xl shadow-sm border border-emerald-100 overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div>
+          <div class="relative">
+            <img src="${item.gambar}" alt="${item.judul}" class="w-full h-48 object-cover">
+            <!-- Nomor Urut Berita -->
+            <span class="absolute top-3 left-3 bg-emerald-800/90 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow">
+              #${nomorUrut}
+            </span>
           </div>
-        </article>
-      `).join('');
-    }
+          <div class="p-5">
+            <span class="text-xs text-emerald-600 font-medium">${item.tanggal}</span>
+            <h3 class="text-lg font-bold text-emerald-950 mt-1 mb-2 line-clamp-2">${item.judul}</h3>
+            <p class="text-sm text-gray-600 line-clamp-3">${item.ringkasan}</p>
+          </div>
+        </div>
+        <div class="px-5 pb-5">
+          <a href="#" class="text-sm font-semibold text-emerald-700 hover:text-emerald-900">Baca selengkapnya &rarr;</a>
+        </div>
+      </article>
+    `;
+    gridBerita.innerHTML += card;
+  });
 
-    function openBeritaDetail(idx) {
-      const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
-      const b = sorted[idx];
-      if (!b) return;
-      document.getElementById('detail-berita-img').src = b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80';
-      document.getElementById('detail-berita-tgl').textContent = b.tanggal;
-      document.getElementById('detail-berita-judul').textContent = b.judul;
-      document.getElementById('detail-berita-isi').textContent = b.isi || b.ringkasan;
-      document.getElementById('modal-berita-detail').classList.remove('hidden');
-    }
+  buatTombolPagination();
+}
+
+// Fungsi Membuat Tombol Navigasi Halaman
+function buatTombolPagination() {
+  const containerPagination = document.getElementById("pagination-berita");
+  
+  if (!containerPagination) return;
+  containerPagination.innerHTML = "";
+
+  const totalHalaman = Math.ceil(dataBerita.length / beritaPerHalaman);
+
+  // Jika total halaman hanya 1 atau kurang, sembunyikan tombol
+  if (totalHalaman <= 1) return;
+
+  // Tombol Sebelumnya (<)
+  const btnPrev = document.createElement("button");
+  btnPrev.innerHTML = "&laquo;";
+  btnPrev.disabled = halamanSaatIni === 1;
+  btnPrev.className = `px-3 py-1.5 rounded-lg text-sm font-semibold border transition ${
+    halamanSaatIni === 1
+      ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+      : "bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50"
+  }`;
+  btnPrev.onclick = () => tampilkanBerita(halamanSaatIni - 1);
+  containerPagination.appendChild(btnPrev);
+
+  // Tombol Nomor Urut Halaman (1, 2, 3, dst.)
+  for (let i = 1; i <= totalHalaman; i++) {
+    const btnPage = document.createElement("button");
+    btnPage.innerText = i;
+    btnPage.className = `px-3.5 py-1.5 rounded-lg text-sm font-bold border transition ${
+      i === halamanSaatIni
+        ? "bg-emerald-700 text-white border-emerald-700 shadow-sm"
+        : "bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50"
+    }`;
+    btnPage.onclick = () => tampilkanBerita(i);
+    containerPagination.appendChild(btnPage);
+  }
+
+  // Tombol Selanjutnya (>)
+  const btnNext = document.createElement("button");
+  btnNext.innerHTML = "&raquo;";
+  btnNext.disabled = halamanSaatIni === totalHalaman;
+  btnNext.className = `px-3 py-1.5 rounded-lg text-sm font-semibold border transition ${
+    halamanSaatIni === totalHalaman
+      ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+      : "bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50"
+  }`;
+  btnNext.onclick = () => tampilkanBerita(halamanSaatIni + 1);
+  containerPagination.appendChild(btnNext);
+}
+
+// Jalankan fungsi saat dokumen selesai dimuat
+document.addEventListener("DOMContentLoaded", () => {
+  tampilkanBerita(1);
+});
 
     function renderStruktur() {
       const grid = document.getElementById('grid-struktur');
