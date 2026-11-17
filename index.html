@@ -378,27 +378,16 @@
       </div>
     </section>
 
-<!-- SECTION ARSIP BERITA -->
-<section id="sec-berita" class="scroll-mt-24">
-  <div class="mb-8">
-    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
-      Kabar & Dokumentasi
-    </span>
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">
-      Arsip Berita & Kegiatan Warga
-    </h2>
-  </div>
-
-  <!-- Container Grid Berita (Maksimal 3 per halaman) -->
-  <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Konten akan di-generate otomatis oleh JavaScript -->
-  </div>
-
-  <!-- Container Pagination / Nomor Halaman -->
-  <div id="pagination-berita" class="mt-8 flex justify-center items-center gap-2">
-    <!-- Tombol navigasi halaman akan muncul di sini -->
-  </div>
-</section>
+    <!-- 6. SECTION ARSIP BERITA DUSUN -->
+    <section id="sec-berita" data-section-id="berita" class="scroll-mt-24">
+      <div class="mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kabar & Dokumentasi</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Arsip Berita & Kegiatan Warga</h2>
+      </div>
+      <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Diisi JS -->
+      </div>
+    </section>
 
     <!-- 7. SECTION STRUKTUR ORGANISASI DUSUN -->
     <section id="sec-struktur" data-section-id="struktur" class="scroll-mt-24">
@@ -975,123 +964,36 @@
       `).join('');
     }
 
-// --- KONFIGURASI UTAMA ---
-const BERITA_PER_HALAMAN = 3;
-let halamanAktif = 1;
-
-/**
- * Fungsi Utama untuk Render Berita & Pagination
- * @param {Array} dataArray - Array data sumber Anda (bisa dari API, Fetch, atau variabel lokal)
- */
-function inisialisasiArsipBerita(dataArray) {
-  const containerGrid = document.getElementById("grid-berita");
-  const containerPagination = document.getElementById("pagination-berita");
-
-  if (!containerGrid || !containerPagination) return;
-
-  // Render ulang isi grid
-  containerGrid.innerHTML = "";
-  containerPagination.innerHTML = "";
-
-  // Validasi jika data kosong
-  if (!dataArray || dataArray.length === 0) {
-    containerGrid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-4">Belum ada berita tersedia.</p>`;
-    return;
-  }
-
-  // Hitung Slice Data
-  const indeksAwal = (halamanAktif - 1) * BERITA_PER_HALAMAN;
-  const indeksAkhir = indeksAwal + BERITA_PER_HALAMAN;
-  const dataHalamanIni = dataArray.slice(indeksAwal, indeksAkhir);
-
-  // 1. RENDER KARTU BERITA
-  dataHalamanIni.forEach((item, index) => {
-    // Nomor urut global (berkelanjutan antar halaman: 1, 2, 3, 4, dst.)
-    const nomorUrutGlobal = indeksAwal + index + 1;
-
-    // SILAHKAN CUSTOM TEMPLATE HTML KARTU DI SINI SESUAI KEBUTUHAN ANDA
-    const cardHTML = `
-      <article class="bg-white rounded-xl shadow-sm border border-emerald-100 overflow-hidden flex flex-col justify-between">
-        <div>
-          <div class="relative">
-            <!-- Sesuaikan key objek sumber data Anda (misal: item.image, item.thumbnail) -->
-            <img src="${item.gambar}" alt="${item.judul}" class="w-full h-48 object-cover">
-            
-            <!-- Badge Nomor Urut -->
-            <span class="absolute top-3 left-3 bg-emerald-800/90 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow">
-              #${nomorUrutGlobal}
-            </span>
+    function renderBerita() {
+      const grid = document.getElementById('grid-berita');
+      const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
+      grid.innerHTML = sorted.map((b, idx) => `
+        <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
+          <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[11px] font-bold text-emerald-700"><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
+              <h3 class="font-extrabold text-slate-900 text-base mt-1.5 line-clamp-2">${b.judul}</h3>
+              <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${b.ringkasan}</p>
+            </div>
+            <button onclick="openBeritaDetail(${idx})" class="mt-4 text-left text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+              Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
           </div>
-          <div class="p-5">
-            <span class="text-xs text-emerald-600 font-medium">${item.tanggal}</span>
-            <h3 class="text-lg font-bold text-emerald-950 mt-1 mb-2 line-clamp-2">${item.judul}</h3>
-            <p class="text-sm text-gray-600 line-clamp-3">${item.ringkasan}</p>
-          </div>
-        </div>
-        <div class="px-5 pb-5">
-          <a href="${item.link || '#'}" class="text-sm font-semibold text-emerald-700 hover:text-emerald-900">
-            Baca selengkapnya &rarr;
-          </a>
-        </div>
-      </article>
-    `;
-    containerGrid.innerHTML += cardHTML;
-  });
-
-  // 2. RENDER TOMBOL PAGINATION
-  const totalHalaman = Math.ceil(dataArray.length / BERITA_PER_HALAMAN);
-  if (totalHalaman <= 1) return; // Sembunyikan jika halaman cuma 1
-
-  // Tombol Prev (<)
-  const btnPrev = document.createElement("button");
-  btnPrev.innerHTML = "&laquo;";
-  btnPrev.disabled = halamanAktif === 1;
-  btnPrev.className = `px-3 py-1.5 rounded-lg text-sm font-semibold border transition ${
-    halamanAktif === 1 ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white text-emerald-800 hover:bg-emerald-50"
-  }`;
-  btnPrev.onclick = () => {
-    if (halamanAktif > 1) {
-      halamanAktif--;
-      inisialisasiArsipBerita(dataArray);
+        </article>
+      `).join('');
     }
-  };
-  containerPagination.appendChild(btnPrev);
 
-  // Tombol Nomor Halaman (1, 2, 3...)
-  for (let i = 1; i <= totalHalaman; i++) {
-    const btnPage = document.createElement("button");
-    btnPage.innerText = i;
-    btnPage.className = `px-3.5 py-1.5 rounded-lg text-sm font-bold border transition ${
-      i === halamanAktif ? "bg-emerald-700 text-white shadow-sm" : "bg-white text-emerald-800 hover:bg-emerald-50"
-    }`;
-    btnPage.onclick = () => {
-      halamanAktif = i;
-      inisialisasiArsipBerita(dataArray);
-    };
-    containerPagination.appendChild(btnPage);
-  }
-
-  // Tombol Next (>)
-  const btnNext = document.createElement("button");
-  btnNext.innerHTML = "&raquo;";
-  btnNext.disabled = halamanAktif === totalHalaman;
-  btnNext.className = `px-3 py-1.5 rounded-lg text-sm font-semibold border transition ${
-    halamanAktif === totalHalaman ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white text-emerald-800 hover:bg-emerald-50"
-  }`;
-  btnNext.onclick = () => {
-    if (halamanAktif < totalHalaman) {
-      halamanAktif++;
-      inisialisasiArsipBerita(dataArray);
+    function openBeritaDetail(idx) {
+      const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
+      const b = sorted[idx];
+      if (!b) return;
+      document.getElementById('detail-berita-img').src = b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80';
+      document.getElementById('detail-berita-tgl').textContent = b.tanggal;
+      document.getElementById('detail-berita-judul').textContent = b.judul;
+      document.getElementById('detail-berita-isi').textContent = b.isi || b.ringkasan;
+      document.getElementById('modal-berita-detail').classList.remove('hidden');
     }
-  };
-  containerPagination.appendChild(btnNext);
-}
-
-// --- CONTOH CARA PEMANGGILAN (TRIGGER) ---
-// document.addEventListener("DOMContentLoaded", () => {
-//   const sumberDataAnda = [...]; // Masukkan array data Anda di sini
-//   inisialisasiArsipBerita(sumberDataAnda);
-// });
 
     function renderStruktur() {
       const grid = document.getElementById('grid-struktur');
