@@ -378,13 +378,18 @@
       </div>
     </section>
 
-    <!-- 6. SECTION ARSIP BERITA DUSUN -->
+       <!-- 6. SECTION ARSIP BERITA DUSUN -->
     <section id="sec-berita" data-section-id="berita" class="scroll-mt-24">
       <div class="mb-8">
         <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kabar & Dokumentasi</span>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Arsip Berita & Kegiatan Warga</h2>
       </div>
+      <!-- Daftar Berita (Maksimal 3 per Halaman) -->
       <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Diisi JS -->
+      </div>
+      <!-- Tombol Nomor Halaman (Pagination) -->
+      <div id="berita-pagination" class="mt-8 flex items-center justify-center gap-2">
         <!-- Diisi JS -->
       </div>
     </section>
@@ -964,10 +969,70 @@
       `).join('');
     }
 
+       let currentBeritaPage = 1;
+    const beritaPerPage = 3;
+
     function renderBerita() {
       const grid = document.getElementById('grid-berita');
+      const paginationContainer = document.getElementById('berita-pagination');
       const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
-      grid.innerHTML = sorted.map((b, idx) => `
+      
+      const totalPages = Math.ceil(sorted.length / beritaPerPage) || 1;
+      if (currentBeritaPage > totalPages) currentBeritaPage = totalPages;
+
+      const startIndex = (currentBeritaPage - 1) * beritaPerPage;
+      const currentItems = sorted.slice(startIndex, startIndex + beritaPerPage);
+
+      // Render 3 berita di halaman aktif
+      grid.innerHTML = currentItems.length ? currentItems.map((b, relativeIdx) => {
+        const absoluteIdx = startIndex + relativeIdx;
+        return `
+          <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
+            <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold text-emerald-700"><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
+                <h3 class="font-extrabold text-slate-900 text-base mt-1.5 line-clamp-2">${b.judul}</h3>
+                <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${b.ringkasan}</p>
+              </div>
+              <button onclick="openBeritaDetail(${absoluteIdx})" class="mt-4 text-left text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('') : `<div class="col-span-3 text-center text-slate-400 text-xs py-8">Belum ada berita yang diunggah.</div>`;
+
+      // Render tombol nomor halaman (Pagination)
+      if (totalPages > 1) {
+        let pagesHtml = '';
+        // Tombol Sebelumnya
+        pagesHtml += `<button onclick="changeBeritaPage(${currentBeritaPage - 1})" ${currentBeritaPage === 1 ? 'disabled class="px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-2 rounded-xl bg-white border border-emerald-200 text-emerald-900 text-xs font-bold hover:bg-emerald-50"'}>&laquo; Prev</button>`;
+
+        // Nomor Halaman
+        for (let i = 1; i <= totalPages; i++) {
+          const isActive = i === currentBeritaPage;
+          pagesHtml += `<button onclick="changeBeritaPage(${i})" class="w-9 h-9 rounded-xl text-xs font-bold transition ${isActive ? 'bg-emerald-800 text-white shadow-md' : 'bg-white border border-emerald-200 text-emerald-900 hover:bg-emerald-50'}">${i}</button>`;
+        }
+
+        // Tombol Berikutnya
+        pagesHtml += `<button onclick="changeBeritaPage(${currentBeritaPage + 1})" ${currentBeritaPage === totalPages ? 'disabled class="px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-2 rounded-xl bg-white border border-emerald-200 text-emerald-900 text-xs font-bold hover:bg-emerald-50"'}>Next &raquo;</button>`;
+        
+        paginationContainer.innerHTML = pagesHtml;
+        paginationContainer.classList.remove('hidden');
+      } else {
+        paginationContainer.innerHTML = '';
+        paginationContainer.classList.add('hidden');
+      }
+    }
+
+    function changeBeritaPage(page) {
+      currentBeritaPage = page;
+      renderBerita();
+      // Scroll halus otomatis kembali ke judul berita saat tombol halaman diklik
+      document.getElementById('sec-berita').scrollIntoView({ behavior: 'smooth' });
+    }
+
         <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
           <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
           <div class="p-5 flex-1 flex flex-col justify-between">
