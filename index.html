@@ -14,20 +14,8 @@
         extend: {
           fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
           colors: {
-            emerald: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              600: '#059669',
-              700: '#047857',
-              800: '#065f46',
-              900: '#064e3b',
-            },
-            gold: {
-              300: '#fde047',
-              400: '#facc15',
-              500: '#eab308',
-              600: '#ca8a04',
-            }
+            emerald: { 50: '#ecfdf5', 100: '#d1fae5', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b' },
+            gold: { 300: '#fde047', 400: '#facc15', 500: '#eab308', 600: '#ca8a04' }
           }
         }
       }
@@ -37,30 +25,12 @@
     body { background-color: #f8faf9; color: #1e293b; }
     .hero-pattern {
       background-color: #064e3b;
-      background-image: radial-gradient(rgba(250, 204, 21, 0.14) 1px, transparent 1px),
-                        linear-gradient(135deg, #064e3b 0%, #047857 60%, #065f46 100%);
+      background-image: radial-gradient(rgba(250, 204, 21, 0.14) 1px, transparent 1px), linear-gradient(135deg, #064e3b 0%, #047857 60%, #065f46 100%);
       background-size: 24px 24px, 100% 100%;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(6, 95, 70, 0.08);
-    }
-    .gold-underline {
-      position: relative;
-      display: inline-block;
-    }
-    .gold-underline::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 56px;
-      height: 4px;
-      border-radius: 99px;
-      background: linear-gradient(90deg, #eab308, #facc15);
-    }
-    /* Custom scrollbar */
+    .glass-card { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); border: 1px solid rgba(6, 95, 70, 0.08); }
+    .gold-underline { position: relative; display: inline-block; }
+    .gold-underline::after { content: ''; position: absolute; left: 0; bottom: -6px; width: 56px; height: 4px; border-radius: 99px; background: linear-gradient(90deg, #eab308, #facc15); }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #059669; border-radius: 99px; }
@@ -68,7 +38,9 @@
 </head>
 <body class="antialiased selection:bg-gold-400 selection:text-emerald-950">
 
-  <!-- KONFIGURASI URL GOOGLE APPS SCRIPT -->
+  <!-- ===================================================================== -->
+  <!-- KONFIGURASI URL GOOGLE APPS SCRIPT (TEMPEL URL /exec ANDA DI SINI)    -->
+  <!-- ===================================================================== -->
   <script>
     const DEFAULT_GAS_URL = ""; 
   </script>
@@ -91,7 +63,7 @@
         <button onclick="openDevModal('layout')" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold transition">
           <i class="fa-solid fa-layer-group mr-1"></i> Tata Letak
         </button>
-        <button onclick="openDevModal('data')" class="px-3 py-1.5 rounded-lg bg-gold-500 hover:bg-gold-400 text-slate-950 text-xs font-bold transition">
+        <button onclick="openDevModal('profil')" class="px-3 py-1.5 rounded-lg bg-gold-500 hover:bg-gold-400 text-slate-950 text-xs font-bold transition">
           <i class="fa-solid fa-pen-to-square mr-1"></i> Kelola Konten Dusun
         </button>
         <button onclick="openDevModal('settings')" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-semibold transition">
@@ -115,11 +87,9 @@
           <span id="nav-nama-dusun" class="font-extrabold text-emerald-900 text-base sm:text-lg tracking-tight block leading-none">Dusun Ngrombeh</span>
           <span class="text-[11px] font-medium text-emerald-600">Desa Klopo • Tegalrejo • Magelang</span>
         </div>
-      </a>
-
-      <!-- Desktop Menu -->
-      <nav id="desktop-nav" class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
-        <a href="#sec-profil" class="hover:text-emerald-700 transition">Profil & Demografi</a>
+      </div>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="#sec-profil" class="hover:text-emerald-700 transition">Profil</a>
         <a href="#sec-rt" class="hover:text-emerald-700 transition">Persebaran RT</a>
         <a href="#sec-keuangan" class="hover:text-emerald-700 transition">Keuangan</a>
         <a href="#sec-umkm" class="hover:text-emerald-700 transition">UMKM</a>
@@ -127,26 +97,11 @@
         <a href="#sec-berita" class="hover:text-emerald-700 transition">Berita</a>
         <a href="#sec-struktur" class="hover:text-emerald-700 transition">Struktur</a>
       </nav>
-
       <div class="flex items-center gap-2">
-        <button onclick="refreshFromSheet()" title="Muat Ulang Data Spreadsheet" class="p-2 rounded-lg text-emerald-700 hover:bg-emerald-50 transition text-sm">
+        <button onclick="refreshFromSheet()" title="Muat Ulang Data" class="p-2 rounded-lg text-emerald-700 hover:bg-emerald-50 transition text-sm">
           <i class="fa-solid fa-arrows-rotate"></i>
         </button>
-        <button id="mobile-menu-btn" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden p-2 rounded-lg text-emerald-800 hover:bg-emerald-50">
-          <i class="fa-solid fa-bars text-lg"></i>
-        </button>
       </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-emerald-100 px-4 py-3 space-y-2 text-sm font-semibold text-slate-700">
-      <a href="#sec-profil" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Profil & Demografi</a>
-      <a href="#sec-rt" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Persebaran RT & KK</a>
-      <a href="#sec-keuangan" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Laporan Keuangan</a>
-      <a href="#sec-umkm" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">UMKM Unggulan</a>
-      <a href="#sec-jadwal" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Jadwal Kegiatan</a>
-      <a href="#sec-berita" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Arsip Berita</a>
-      <a href="#sec-struktur" onclick="this.parentElement.classList.add('hidden')" class="block py-1.5 hover:text-emerald-700">Struktur Dusun</a>
     </div>
   </header>
 
@@ -162,54 +117,25 @@
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
             Portal Informasi & Transparansi <span id="hero-nama-dusun" class="text-gold-400">Dusun Ngrombeh</span>
           </h1>
-          <p id="hero-tagline" class="text-emerald-100 text-base sm:text-lg font-medium max-w-2xl">
-            Guyub Rukun, Maju Bersama, Sejahtera Warganya
-          </p>
-          <p id="hero-deskripsi" class="text-emerald-200/90 text-sm leading-relaxed max-w-2xl">
-            Dusun Ngrombeh merupakan salah satu dusun yang asri dan dinamis di wilayah Desa Klopo, Kecamatan Tegalrejo, Kabupaten Magelang.
-          </p>
-          <div class="pt-2 flex flex-wrap gap-3">
-            <a href="#sec-profil" class="px-5 py-3 rounded-xl bg-gold-400 hover:bg-gold-300 text-emerald-950 font-bold text-sm shadow-lg shadow-emerald-950/30 transition flex items-center gap-2">
-              <i class="fa-solid fa-chart-pie"></i> Data Kependudukan
-            </a>
-            <a href="#sec-keuangan" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold text-sm transition flex items-center gap-2">
-              <i class="fa-solid fa-wallet text-gold-400"></i> Transparansi Kas
-            </a>
-          </div>
+          <p id="hero-tagline" class="text-emerald-100 text-base sm:text-lg font-medium max-w-2xl">Guyub Rukun, Maju Bersama, Sejahtera Warganya</p>
+          <p id="hero-deskripsi" class="text-emerald-200/90 text-sm leading-relaxed max-w-2xl">Portal resmi dusun untuk keterbukaan informasi dan pelayanan warga.</p>
         </div>
-
-        <!-- Ringkasan Statistik Cepat di Hero -->
         <div class="lg:col-span-5">
           <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
             <div class="flex items-center justify-between border-b border-white/15 pb-3 mb-4">
               <span class="text-xs font-bold uppercase tracking-wider text-gold-300">Ringkasan Statistik Dusun</span>
-              <span class="text-[11px] bg-emerald-950/60 px-2.5 py-0.5 rounded-full text-emerald-200">Data Terkini</span>
             </div>
             <div class="grid grid-cols-2 gap-3.5">
               <div class="bg-emerald-950/50 rounded-xl p-4 border border-white/10">
                 <div class="text-gold-400 text-xl mb-1"><i class="fa-solid fa-users"></i></div>
-                <div id="stat-total-warga" class="text-2xl sm:text-3xl font-extrabold">0</div>
+                <div id="stat-total-warga" class="text-2xl font-extrabold">0</div>
                 <div class="text-xs text-emerald-200">Total Penduduk (Jiwa)</div>
               </div>
               <div class="bg-emerald-950/50 rounded-xl p-4 border border-white/10">
                 <div class="text-gold-400 text-xl mb-1"><i class="fa-solid fa-house-user"></i></div>
-                <div id="stat-total-kk" class="text-2xl sm:text-3xl font-extrabold">0</div>
+                <div id="stat-total-kk" class="text-2xl font-extrabold">0</div>
                 <div class="text-xs text-emerald-200">Kepala Keluarga (KK)</div>
               </div>
-              <div class="bg-emerald-950/50 rounded-xl p-4 border border-white/10">
-                <div class="text-sky-300 text-xl mb-1"><i class="fa-solid fa-mars"></i></div>
-                <div id="stat-total-laki" class="text-2xl font-extrabold">0</div>
-                <div class="text-xs text-emerald-200">Laki-laki</div>
-              </div>
-              <div class="bg-emerald-950/50 rounded-xl p-4 border border-white/10">
-                <div class="text-rose-300 text-xl mb-1"><i class="fa-solid fa-venus"></i></div>
-                <div id="stat-total-perempuan" class="text-2xl font-extrabold">0</div>
-                <div class="text-xs text-emerald-200">Perempuan</div>
-              </div>
-            </div>
-            <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs text-emerald-200">
-              <span><i class="fa-solid fa-map-pin text-gold-400 mr-1"></i> Jumlah Wilayah: <strong id="stat-total-rt" class="text-white">2 RT</strong></span>
-              <span><i class="fa-solid fa-vault text-gold-400 mr-1"></i> Total Saldo Kas: <strong id="stat-total-kas" class="text-gold-300">Rp 0</strong></span>
             </div>
           </div>
         </div>
@@ -217,177 +143,109 @@
     </div>
   </section>
 
-  <!-- MAIN CONTENT CONTAINER -->
+  <!-- MAIN CONTAINER SECTIONS -->
   <main id="dynamic-sections-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 
-    <!-- 1. SECTION PROFIL & DEMOGRAFI DUSUN -->
+    <!-- 1. PROFIL -->
     <section id="sec-profil" data-section-id="profil" class="scroll-mt-24">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Data Kependudukan</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Profil & Demografi Penduduk</h2>
-        </div>
-        <div class="flex items-center gap-3 text-xs font-semibold text-slate-600 bg-white px-4 py-2 rounded-xl border border-emerald-100 shadow-sm">
-          <span>Luas Wilayah: <strong id="info-luas" class="text-emerald-800">42,5 Ha</strong></span>
-          <span class="text-slate-300">|</span>
-          <span>Kode Pos: <strong id="info-kodepos" class="text-emerald-800">56192</strong></span>
-        </div>
-      </div>
-
-      <div id="grid-profil" class="grid lg:grid-cols-2 gap-8 items-start">
-        <!-- Tabel Usia Laki-laki & Perempuan -->
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-emerald-900 text-lg"><i class="fa-solid fa-table-list text-gold-500 mr-2"></i>Klasifikasi Usia Penduduk</h3>
-            <span class="text-xs text-slate-500">Terintegrasi Spreadsheet</span>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left border-collapse">
-              <thead>
-                <tr class="bg-emerald-800 text-white text-xs uppercase">
-                  <th class="py-3 px-4 rounded-tl-xl">Kategori Usia</th>
-                  <th class="py-3 px-3">Rentang</th>
-                  <th class="py-3 px-3 text-center">Laki-laki</th>
-                  <th class="py-3 px-3 text-center">Perempuan</th>
-                  <th class="py-3 px-4 text-right rounded-tr-xl">Jumlah</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-demografi" class="divide-y divide-emerald-50"></tbody>
-              <tfoot id="tfoot-demografi" class="bg-emerald-50 font-bold text-emerald-950"></tfoot>
-            </table>
-          </div>
-        </div>
-
-        <!-- Visual Grafik Demografi -->
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-          <h3 class="font-bold text-emerald-900 text-lg mb-4"><i class="fa-solid fa-chart-column text-gold-500 mr-2"></i>Grafik Demografi Usia & Gender</h3>
-          <div class="relative h-72 w-full">
-            <canvas id="chartDemografi"></canvas>
-          </div>
-          <div class="mt-4 grid grid-cols-2 gap-3 pt-4 border-t border-slate-100 text-center">
-            <div class="bg-sky-50 rounded-xl p-3">
-              <span class="text-xs text-sky-700 font-semibold block">Rasio Laki-laki</span>
-              <span id="persen-laki" class="text-lg font-extrabold text-sky-900">0%</span>
-            </div>
-            <div class="bg-rose-50 rounded-xl p-3">
-              <span class="text-xs text-rose-700 font-semibold block">Rasio Perempuan</span>
-              <span id="persen-perempuan" class="text-lg font-extrabold text-rose-900">0%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. SECTION PERSEBARAN WARGA & KK PER RT -->
-    <section id="sec-rt" data-section-id="rt" class="scroll-mt-24">
       <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Wilayah Administratif</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Persebaran Warga & Kartu Keluarga per RT</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kependudukan</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Profil & Demografi Penduduk</h2>
       </div>
-
-      <div id="grid-rt" class="grid lg:grid-cols-2 gap-8 items-center">
-        <div id="rt-cards-container" class="space-y-4"></div>
-        <div class="glass-card rounded-2xl p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-emerald-900 text-lg"><i class="fa-solid fa-chart-bar text-gold-500 mr-2"></i>Perbandingan KK & Warga Antar RT</h3>
-            <span id="badge-jumlah-rt" class="text-xs font-bold bg-gold-400/30 text-emerald-900 px-2.5 py-1 rounded-lg">2 Wilayah RT</span>
-          </div>
-          <div class="relative h-72 w-full">
-            <canvas id="chartRT"></canvas>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. SECTION LAPORAN KEUANGAN & KAS DUSUN -->
-    <section id="sec-keuangan" data-section-id="keuangan" class="scroll-mt-24">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-        <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Transparansi Publik</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Laporan Keuangan & Kantong Kas Dusun</h2>
-        </div>
-        <div class="bg-gradient-to-r from-emerald-800 to-emerald-700 text-white px-5 py-3 rounded-2xl shadow-md">
-          <span class="text-xs text-emerald-200 block">Total Seluruh Saldo Kas</span>
-          <span id="keuangan-grand-total" class="text-xl sm:text-2xl font-extrabold text-gold-400">Rp 0</span>
-        </div>
-      </div>
-
-      <div id="grid-keuangan" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
-
-      <div class="glass-card rounded-2xl p-6 shadow-sm">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <h3 class="font-bold text-emerald-900 text-lg"><i class="fa-solid fa-money-bill-transfer text-gold-500 mr-2"></i>Riwayat Arus Kas (Masuk & Keluar)</h3>
-          <select id="filter-kantong" onchange="renderKeuangan()" class="text-xs font-semibold border border-emerald-200 rounded-xl px-3 py-2 bg-white text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-600">
-            <option value="ALL">Semua Kantong Kas</option>
-          </select>
-        </div>
-        <div class="overflow-x-auto">
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <div class="glass-card rounded-2xl p-6 shadow-sm overflow-x-auto">
           <table class="w-full text-sm text-left">
             <thead>
-              <tr class="bg-emerald-50 text-emerald-900 text-xs uppercase border-b border-emerald-200">
-                <th class="py-3 px-4">Tanggal</th>
-                <th class="py-3 px-4">Kantong Kas</th>
-                <th class="py-3 px-4">Keterangan Transaksi</th>
-                <th class="py-3 px-4 text-center">Jenis</th>
-                <th class="py-3 px-4 text-right">Nominal</th>
+              <tr class="bg-emerald-800 text-white text-xs uppercase">
+                <th class="py-3 px-4 rounded-tl-xl">Kategori Usia</th>
+                <th class="py-3 px-3">Rentang</th>
+                <th class="py-3 px-3 text-center">L</th>
+                <th class="py-3 px-3 text-center">P</th>
+                <th class="py-3 px-4 text-right rounded-tr-xl">Jumlah</th>
               </tr>
             </thead>
-            <tbody id="tbody-transaksi" class="divide-y divide-slate-100"></tbody>
+            <tbody id="tbody-demografi" class="divide-y divide-emerald-50"></tbody>
+            <tfoot id="tfoot-demografi" class="bg-emerald-50 font-bold text-emerald-950"></tfoot>
           </table>
+        </div>
+        <div class="glass-card rounded-2xl p-6 shadow-sm">
+          <h3 class="font-bold text-emerald-900 text-lg mb-4">Grafik Demografi</h3>
+          <div class="relative h-72 w-full"><canvas id="chartDemografi"></canvas></div>
         </div>
       </div>
     </section>
 
-    <!-- 4. SECTION UMKM UNGGULAN (DENGAN PAGINASI 3 ITEM) -->
+    <!-- 2. RT -->
+    <section id="sec-rt" data-section-id="rt" class="scroll-mt-24">
+      <div class="mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Wilayah</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Persebaran Warga per RT</h2>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div id="rt-cards-container" class="space-y-4"></div>
+        <div class="glass-card rounded-2xl p-6 shadow-sm">
+          <div class="relative h-72 w-full"><canvas id="chartRT"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. KEUANGAN -->
+    <section id="sec-keuangan" data-section-id="keuangan" class="scroll-mt-24">
+      <div class="flex justify-between items-end mb-8 flex-wrap gap-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Transparansi</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Laporan Keuangan & Kas</h2>
+        </div>
+        <div class="bg-emerald-800 text-white px-5 py-3 rounded-2xl">
+          <span class="text-xs text-emerald-200 block">Total Saldo Kas</span>
+          <span id="keuangan-grand-total" class="text-xl font-extrabold text-gold-400">Rp 0</span>
+        </div>
+      </div>
+      <div id="grid-keuangan" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
+    </section>
+
+    <!-- 4. UMKM (PAGINASI 3 ITEM) -->
     <section id="sec-umkm" data-section-id="umkm" class="scroll-mt-24">
       <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Ekonomi Kreatif Warga</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">UMKM Unggulan Dusun Ngrombeh</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Ekonomi Kreatif</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">UMKM Unggulan Warga</h2>
       </div>
-      <!-- Tempat Grid UMKM -->
       <div id="grid-umkm" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-      <!-- Navigasi Paginasi UMKM -->
       <div id="pagination-umkm" class="flex items-center justify-center gap-2 mt-8"></div>
     </section>
 
-    <!-- 5. SECTION JADWAL KEGIATAN DUSUN -->
+    <!-- 5. JADWAL -->
     <section id="sec-jadwal" data-section-id="jadwal" class="scroll-mt-24">
       <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Agenda & Gotong Royong</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Agenda</span>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Jadwal Kegiatan Dusun</h2>
       </div>
       <div id="grid-jadwal" class="grid md:grid-cols-2 gap-4"></div>
     </section>
 
-    <!-- 6. SECTION ARsip BERITA DUSUN (DENGAN PAGINASI 3 ITEM) -->
+    <!-- 6. BERITA (PAGINASI 3 ITEM) -->
     <section id="sec-berita" data-section-id="berita" class="scroll-mt-24">
       <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kabar & Dokumentasi</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Arsip Berita & Kegiatan Warga</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Kabar</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Arsip Berita & Kegiatan</h2>
       </div>
-      <!-- Tempat Grid Berita -->
       <div id="grid-berita" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-      <!-- Navigasi Paginasi Berita -->
       <div id="pagination-berita" class="flex items-center justify-center gap-2 mt-8"></div>
     </section>
 
-    <!-- 7. SECTION STRUKTUR ORGANISASI DUSUN -->
+    <!-- 7. STRUKTUR -->
     <section id="sec-struktur" data-section-id="struktur" class="scroll-mt-24">
       <div class="mb-8">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Perangkat & Tokoh</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Struktur Organisasi Dusun Ngrombeh</h2>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Perangkat</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 gold-underline">Struktur Organisasi Dusun</h2>
       </div>
       <div id="grid-struktur" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- 8. SECTION SOSIAL MEDIA DUSUN -->
+    <!-- 8. SOSMED -->
     <section id="sec-sosmed" data-section-id="sosmed" class="scroll-mt-24">
-      <div class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 rounded-3xl p-8 sm:p-10 text-white shadow-xl border border-gold-400/30">
-        <div class="max-w-2xl mb-6">
-          <span class="text-xs font-bold uppercase tracking-wider text-gold-400">Terhubung Dengan Kami</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Kanal Informasi & Sosial Media Resmi</h2>
-          <p class="text-emerald-200 text-sm mt-2">Ikuti perkembangan kegiatan, pengumuman, dan dokumentasi Dusun Ngrombeh melalui kanal resmi berikut.</p>
-        </div>
+      <div class="bg-gradient-to-br from-emerald-900 to-emerald-950 rounded-3xl p-8 text-white shadow-xl border border-gold-400/30">
+        <h2 class="text-2xl font-extrabold mb-4">Kanal Sosial Media Resmi</h2>
         <div id="grid-sosmed" class="grid grid-cols-2 sm:grid-cols-4 gap-4"></div>
       </div>
     </section>
@@ -395,182 +253,88 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-emerald-950 text-emerald-200 border-t-4 border-gold-500 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-emerald-800/80 pb-6">
-        <div class="text-center md:text-left">
-          <h3 id="footer-nama-dusun" class="font-extrabold text-white text-lg">Dusun Ngrombeh</h3>
-          <p id="footer-wilayah" class="text-xs text-emerald-300">Desa Klopo, Kecamatan Tegalrejo, Kabupaten Magelang, Jawa Tengah</p>
-        </div>
-        <div class="text-xs text-emerald-300 text-center md:text-right">
-          Sistem Informasi Transparansi Dusun • Terintegrasi Google Spreadsheets
-        </div>
+  <footer class="bg-emerald-950 text-emerald-200 border-t-4 border-gold-500 mt-16 py-10">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <h3 id="footer-nama-dusun" class="font-extrabold text-white text-lg">Dusun Ngrombeh</h3>
+        <p id="footer-wilayah" class="text-xs text-emerald-300">Desa Klopo, Tegalrejo, Magelang</p>
       </div>
-      <div class="pt-5 flex items-center justify-between text-[11px] text-emerald-400/70">
-        <span>&copy; 2026 Pemerintah Dusun Ngrombeh. Hak Cipta Dilindungi.</span>
-        <button onclick="openLoginModal()" class="hover:text-gold-400 transition flex items-center gap-1 opacity-60 hover:opacity-100" title="Akses Pengelola / Developer">
-          <i class="fa-solid fa-lock text-[10px]"></i> <span>Dev</span>
-        </button>
-      </div>
+      <button onclick="openLoginModal()" class="text-xs text-emerald-400 hover:text-gold-400 flex items-center gap-1 opacity-70 hover:opacity-100">
+        <i class="fa-solid fa-lock text-[10px]"></i> <span>Login Developer</span>
+      </button>
     </div>
   </footer>
 
-  <!-- MODAL BACA BERITA LENGKAP -->
+  <!-- MODAL BACA BERITA -->
   <div id="modal-berita-detail" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-      <img id="detail-berita-img" src="" alt="Foto Berita" class="w-full h-64 object-cover" />
+      <img id="detail-berita-img" src="" alt="Berita" class="w-full h-64 object-cover" />
       <div class="p-6">
         <span id="detail-berita-tgl" class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full"></span>
-        <h3 id="detail-berita-judul" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-3"></h3>
-        <p id="detail-berita-isi" class="text-slate-600 text-sm leading-relaxed mt-4 whitespace-pre-line"></p>
+        <h3 id="detail-berita-judul" class="text-xl font-extrabold text-slate-900 mt-3"></h3>
+        <p id="detail-berita-isi" class="text-slate-600 text-sm mt-4 whitespace-pre-line"></p>
         <div class="mt-6 text-right">
-          <button onclick="document.getElementById('modal-berita-detail').classList.add('hidden')" class="px-5 py-2 rounded-xl bg-emerald-800 text-white text-sm font-semibold hover:bg-emerald-700">Tutup Berita</button>
+          <button onclick="document.getElementById('modal-berita-detail').classList.add('hidden')" class="px-5 py-2 rounded-xl bg-emerald-800 text-white text-sm font-semibold">Tutup</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL LOGIN DEVELOPER -->
+  <!-- MODAL LOGIN -->
   <div id="modal-login" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border-t-4 border-gold-400">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-extrabold text-emerald-950 text-lg"><i class="fa-solid fa-shield-halved text-gold-500 mr-2"></i>Login Developer</h3>
-        <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark"></i></button>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-extrabold text-emerald-950 text-lg">Login Developer</h3>
+        <button onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <p class="text-xs text-slate-500 mb-4">Masuk untuk mengelola isi website, tata letak, dan sinkronisasi Google Spreadsheets.</p>
-      <form onsubmit="handleLogin(event)" class="space-y-3.5">
+      <form onsubmit="handleLogin(event)" class="space-y-3">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Username</label>
-          <input type="text" id="login-user" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none" placeholder="admin" />
+          <label class="block text-xs font-bold mb-1">Username</label>
+          <input type="text" id="login-user" required class="w-full px-3.5 py-2 rounded-xl border text-sm" />
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
-          <input type="password" id="login-pass" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-600 focus:outline-none" placeholder="••••••••" />
+          <label class="block text-xs font-bold mb-1">Password</label>
+          <input type="password" id="login-pass" required class="w-full px-3.5 py-2 rounded-xl border text-sm" />
         </div>
-        <div id="login-error" class="hidden text-xs text-rose-600 font-semibold bg-rose-50 p-2 rounded-lg"></div>
-        <button type="submit" id="btn-login-submit" class="w-full py-2.5 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-sm transition">
-          Masuk Mode Developer
-        </button>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-800 text-white font-bold text-sm">Masuk</button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL PANEL DEVELOPER -->
+  <!-- MODAL PANEL DEVELOPER / CMS -->
   <div id="modal-dev" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
-      <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between border-b-2 border-gold-400">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-lg bg-gold-400 text-slate-950 flex items-center justify-center font-bold"><i class="fa-solid fa-sliders"></i></span>
-          <div>
-            <h3 class="font-bold text-base">Panel Kontrol Developer Dusun Ngrombeh</h3>
-            <p class="text-[11px] text-slate-400">Edit data, upload foto, atur tata letak, dan simpan langsung ke Google Sheets</p>
-          </div>
-        </div>
-        <button onclick="closeDevModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center border-b-2 border-gold-400">
+        <h3 class="font-bold text-base">Panel Kontrol Developer / CMS</h3>
+        <button onclick="closeDevModal()" class="text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
-
-      <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex flex-wrap gap-1.5 text-xs font-bold">
-        <button onclick="switchDevTab('layout')" id="tab-btn-layout" class="dev-tab-btn px-3 py-2 rounded-lg bg-emerald-800 text-white">1. Tata Letak (ON/OFF & Urutan)</button>
-        <button onclick="switchDevTab('profil')" id="tab-btn-profil" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">2. Profil & Sosmed</button>
-        <button onclick="switchDevTab('demografi')" id="tab-btn-demografi" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">3. Demografi Usia</button>
-        <button onclick="switchDevTab('rt')" id="tab-btn-rt" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">4. Data RT & KK</button>
-        <button onclick="switchDevTab('keuangan')" id="tab-btn-keuangan" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">5. Kas & Transaksi</button>
-        <button onclick="switchDevTab('umkm')" id="tab-btn-umkm" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">6. UMKM</button>
-        <button onclick="switchDevTab('jadwal')" id="tab-btn-jadwal" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">7. Jadwal</button>
-        <button onclick="switchDevTab('berita')" id="tab-btn-berita" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">8. Berita</button>
-        <button onclick="switchDevTab('struktur')" id="tab-btn-struktur" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">9. Struktur</button>
-        <button onclick="switchDevTab('settings')" id="tab-btn-settings" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700 hover:bg-emerald-50">10. Akun & Link Sheet</button>
+      <div class="bg-slate-100 px-4 py-2 border-b flex flex-wrap gap-1.5 text-xs font-bold">
+        <button onclick="switchDevTab('profil')" id="tab-btn-profil" class="dev-tab-btn px-3 py-2 rounded-lg bg-emerald-800 text-white">Profil & Sosmed</button>
+        <button onclick="switchDevTab('umkm')" id="tab-btn-umkm" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700">UMKM</button>
+        <button onclick="switchDevTab('berita')" id="tab-btn-berita" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700">Berita</button>
+        <button onclick="switchDevTab('settings')" id="tab-btn-settings" class="dev-tab-btn px-3 py-2 rounded-lg bg-white text-slate-700">Akun & URL Sheet</button>
       </div>
-
-      <div id="dev-tab-content" class="p-6 overflow-y-auto flex-1 space-y-6 bg-slate-50"></div>
+      <div id="dev-tab-content" class="p-6 overflow-y-auto flex-1 space-y-4 bg-slate-50"></div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT ENGINE -->
+  <!-- JAVASCRIPT ENGINE & PAGINASI -->
   <script>
     let state = {
-      config: {
-        nama_dusun: 'Dusun Ngrombeh',
-        wilayah: 'Desa Klopo, Kec. Tegalrejo, Kab. Magelang, Jawa Tengah',
-        tagline: 'Guyub Rukun, Maju Bersama, Sejahtera Warganya',
-        deskripsi_profil: 'Dusun Ngrombeh merupakan salah satu dusun yang asri dan dinamis di wilayah Desa Klopo, Kecamatan Tegalrejo, Kabupaten Magelang.',
-        luas_wilayah: '42,5 Ha',
-        kode_pos: '56192',
-        instagram: 'https://instagram.com/dusunngrombeh',
-        facebook: 'https://facebook.com/dusunngrombeh',
-        youtube: 'https://youtube.com/@dusunngrombeh',
-        tiktok: 'https://tiktok.com/@dusunngrombeh',
-        whatsapp_dusun: '6281234567890'
-      },
-      layout: [
-        { id: 'profil', nama_section: 'Profil & Demografi Dusun', aktif: true, urutan: 1, kolom: 2 },
-        { id: 'rt', nama_section: 'Persebaran Warga & KK per RT', aktif: true, urutan: 2, kolom: 2 },
-        { id: 'keuangan', nama_section: 'Transparansi Keuangan & Kas Dusun', aktif: true, urutan: 3, kolom: 3 },
-        { id: 'umkm', nama_section: 'UMKM Unggulan Warga', aktif: true, urutan: 4, kolom: 3 },
-        { id: 'jadwal', nama_section: 'Jadwal Kegiatan Dusun', aktif: true, urutan: 5, kolom: 2 },
-        { id: 'berita', nama_section: 'Arsip Berita & Dokumentasi', aktif: true, urutan: 6, kolom: 3 },
-        { id: 'struktur', nama_section: 'Struktur Organisasi Dusun', aktif: true, urutan: 7, kolom: 3 },
-        { id: 'sosmed', nama_section: 'Kanal & Sosial Media Dusun', aktif: true, urutan: 8, kolom: 4 }
-      ],
-      demografi: [
-        { id: 'd1', kategori: 'Balita', rentang_usia: '0 - 5 Tahun', laki_laki: 18, perempuan: 16 },
-        { id: 'd2', kategori: 'Anak-anak', rentang_usia: '6 - 12 Tahun', laki_laki: 27, perempuan: 25 },
-        { id: 'd3', kategori: 'Remaja', rentang_usia: '13 - 21 Tahun', laki_laki: 34, perempuan: 31 },
-        { id: 'd4', kategori: 'Dewasa', rentang_usia: '22 - 59 Tahun', laki_laki: 112, perempuan: 118 },
-        { id: 'd5', kategori: 'Lansia', rentang_usia: '60+ Tahun', laki_laki: 29, perempuan: 34 }
-      ],
-      rt: [
-        { id: 'rt1', nama_rt: 'RT 01 / RW 01', ketua_rt: 'Bpk. Slamet Riyadi', jumlah_kk: 68, laki_laki: 114, perempuan: 116 },
-        { id: 'rt2', nama_rt: 'RT 02 / RW 01', ketua_rt: 'Bpk. Ahmad Fauzi', jumlah_kk: 64, laki_laki: 106, perempuan: 108 }
-      ],
-      kas_kantong: [
-        { id: 'k1', nama_kantong: 'Kas RT 01', saldo_awal: 4500000, keterangan: 'Iuran rutin warga RT 01' },
-        { id: 'k2', nama_kantong: 'Kas RT 02', saldo_awal: 4250000, keterangan: 'Iuran rutin warga RT 02' },
-        { id: 'k3', nama_kantong: 'Kas Masjid', saldo_awal: 12800000, keterangan: 'Infaq Jumat & operasional masjid' },
-        { id: 'k4', nama_kantong: 'Kas Pembangunan', saldo_awal: 18500000, keterangan: 'Dana infrastruktur & jalan dusun' },
-        { id: 'k5', nama_kantong: 'Kas Jimpitan', saldo_awal: 3650000, keterangan: 'Hasil ronda malam warga' }
-      ],
-      kas_transaksi: [
-        { id: 't1', tanggal: '2026-11-05', kantong_id: 'k5', jenis: 'masuk', nominal: 450000, keterangan: 'Setoran jimpitan minggu pertama' },
-        { id: 't2', tanggal: '2026-11-08', kantong_id: 'k4', jenis: 'keluar', nominal: 1200000, keterangan: 'Pembelian lampu penerangan jalan gang' }
-      ],
-      umkm: [
-        { id: 'u1', nama_usaha: 'Keripik Slondok & Potel Ngrombeh', pemilik: 'Ibu Siti Aminah', kategori: 'Kuliner Khas', deskripsi: 'Olahan singkong pilihan renyah gurih khas Tegalrejo.', whatsapp: '6281234567891', gambar: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=80' },
-        { id: 'u2', nama_usaha: 'Bibit Tanaman Buah & Hias', pemilik: 'Bpk. Hendra Kusuma', kategori: 'Pertanian', deskripsi: 'Bibit durian montong, alpukat, dan tanaman hias pekarangan.', whatsapp: '6281234567892', gambar: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=800&q=80' },
-        { id: 'u3', nama_usaha: 'Mebel Kayu Jati & Mahoni', pemilik: 'Bpk. Wahyu Hidayat', kategori: 'Furnitur', deskripsi: 'Pemesanan kusen, pintu, dan meja kursi tamu custom.', whatsapp: '6281234567893', gambar: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80' },
-        { id: 'u4', nama_usaha: 'Jas Hujan & Konveksi Lokal', pemilik: 'Ibu Rina Wati', kategori: 'Konveksi', deskripsi: 'Produksi konveksi pakaian harian dan jas hujan berkualitas.', whatsapp: '6281234567894', gambar: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80' }
-      ],
-      jadwal: [
-        { id: 'j1', tanggal: '2026-11-22', waktu: '07:00 WIB', kegiatan: 'Kerja Bakti Saluran Irigasi', lokasi: 'RT 01 & RT 02', penanggung_jawab: 'Kadus' }
-      ],
-      berita: [
-        { id: 'b1', tanggal: '2026-11-10', judul: 'Gotong Royong Pengecoran Jalan RT 02', ringkasan: 'Warga Dusun Ngrombeh bahu-membahu menyelesaikan pengecoran jalan.', isi: 'Semangat gotong royong warga Dusun Ngrombeh...', gambar: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80' },
-        { id: 'b2', tanggal: '2026-11-03', judul: 'Pelatihan Digital Marketing UMKM', ringkasan: 'Karang Taruna mengadakan pendampingan foto produk digital.', isi: 'Untuk mendorong produk lokal...', gambar: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80' },
-        { id: 'b3', tanggal: '2026-10-25', judul: 'Penyuluhan Kesehatan Posyandu Lansia', ringkasan: 'Pemeriksaan kesehatan gratis bagi warga lanjut usia.', isi: 'Kegiatan rutin posyandu lansia...', gambar: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80' },
-        { id: 'b4', tanggal: '2026-10-15', judul: 'Turnamen Bola Voli Antar RT', ringkasan: 'Mempererat kerukunan pemuda melalui turnamen antar RT.', isi: 'Pertandingan berlangsung meriah...', gambar: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80' }
-      ],
-      struktur: [
-        { id: 's1', jabatan: 'Kepala Dusun', nama: 'Bpk. H. Muhamad Ridwan', kontak: '0812-3456-7890', urutan: 1 }
-      ]
+      config: { nama_dusun: 'Dusun Ngrombeh', wilayah: 'Desa Klopo, Kec. Tegalrejo, Kab. Magelang', tagline: 'Guyub Rukun, Maju Bersama, Sejahtera Warganya', deskripsi_profil: 'Portal informasi dusun.', luas_wilayah: '42,5 Ha', kode_pos: '56192', instagram: '#', facebook: '#', youtube: '#', tiktok: '#' },
+      layout: [], demografi: [], rt: [], kas_kantong: [], kas_transaksi: [], umkm: [], jadwal: [], berita: [], struktur: []
     };
 
-    // VARIABEL PELACAK HALAMAN (PAGINATION STATE)
     let currentPageUmkm = 1;
     let currentPageBerita = 1;
-    const itemsPerPage = 3; // Batasan 3 artikel per halaman
+    const itemsPerPage = 3; // Batasan 3 item per halaman
 
     let chartDemografiInstance = null;
     let chartRTInstance = null;
     let devAuth = JSON.parse(sessionStorage.getItem('ngrombeh_dev_auth') || 'null');
 
-    function getGasUrl() {
-      return localStorage.getItem('ngrombeh_gas_url') || DEFAULT_GAS_URL;
-    }
-
-    function formatRupiah(angka) {
-      return 'Rp ' + Number(angka || 0).toLocaleString('id-ID');
-    }
-
+    function getGasUrl() { return localStorage.getItem('ngrombeh_gas_url') || DEFAULT_GAS_URL; }
+    function formatRupiah(angka) { return 'Rp ' + Number(angka || 0).toLocaleString('id-ID'); }
     function showSync(msg, autoHide = false) {
       const banner = document.getElementById('sync-banner');
       document.getElementById('sync-text').textContent = msg;
@@ -580,20 +344,16 @@
 
     async function refreshFromSheet() {
       const url = getGasUrl();
-      if (!url) {
-        renderAll();
-        return;
-      }
-      showSync('Mengambil data terbaru dari Google Spreadsheets...');
+      if (!url) { renderAll(); return; }
+      showSync('Mengambil data dari Spreadsheet...');
       try {
         const res = await fetch(url + '?action=getAll');
         const json = await res.json();
         if (json.status === 'success') {
-          if (json.config && Object.keys(json.config).length) state.config = { ...state.config, ...json.config };
-          if (json.layout && json.layout.length) state.layout = json.layout;
-          if (json.demografi && json.demografi.length) state.demografi = json.demografi;
-          if (json.rt && json.rt.length) state.rt = json.rt;
-          if (json.kas_kantong && json.kas_kantong.length) state.kas_kantong = json.kas_kantong;
+          if (json.config) state.config = { ...state.config, ...json.config };
+          if (json.demografi) state.demografi = json.demografi;
+          if (json.rt) state.rt = json.rt;
+          if (json.kas_kantong) state.kas_kantong = json.kas_kantong;
           if (json.kas_transaksi) state.kas_transaksi = json.kas_transaksi;
           if (json.umkm) state.umkm = json.umkm;
           if (json.jadwal) state.jadwal = json.jadwal;
@@ -602,13 +362,12 @@
           showSync('Data tersinkronisasi!', true);
         }
       } catch (e) {
-        showSync('Mode Offline / Preview', true);
+        showSync('Mode Offline (Gagal terhubung ke GAS)', true);
       }
       renderAll();
     }
 
     function renderAll() {
-      applyLayoutSettings();
       renderHeaderHero();
       renderDemografi();
       renderRT();
@@ -620,21 +379,6 @@
       renderSosmed();
     }
 
-    function applyLayoutSettings() {
-      const container = document.getElementById('dynamic-sections-container');
-      const sorted = [...state.layout].sort((a, b) => a.urutan - b.urutan);
-      sorted.forEach(item => {
-        const sec = document.getElementById('sec-' + item.id);
-        if (!sec) return;
-        if (item.aktif) {
-          sec.classList.remove('hidden');
-          container.appendChild(sec);
-        } else {
-          sec.classList.add('hidden');
-        }
-      });
-    }
-
     function renderHeaderHero() {
       const c = state.config;
       document.getElementById('nav-nama-dusun').textContent = c.nama_dusun;
@@ -642,8 +386,6 @@
       document.getElementById('hero-wilayah').textContent = c.wilayah;
       document.getElementById('hero-tagline').textContent = c.tagline;
       document.getElementById('hero-deskripsi').textContent = c.deskripsi_profil;
-      document.getElementById('info-luas').textContent = c.luas_wilayah;
-      document.getElementById('info-kodepos').textContent = c.kode_pos;
       document.getElementById('footer-nama-dusun').textContent = c.nama_dusun;
       document.getElementById('footer-wilayah').textContent = c.wilayah;
     }
@@ -652,320 +394,119 @@
       const tbody = document.getElementById('tbody-demografi');
       const tfoot = document.getElementById('tfoot-demografi');
       let sumL = 0, sumP = 0;
-
-      tbody.innerHTML = state.demografi.map(row => {
-        const l = Number(row.laki_laki || 0);
-        const p = Number(row.perempuan || 0);
-        sumL += l; sumP += p;
-        return `
-          <tr class="hover:bg-emerald-50/60 transition">
-            <td class="py-3 px-4 font-bold text-slate-800">${row.kategori}</td>
-            <td class="py-3 px-3 text-xs text-slate-500">${row.rentang_usia}</td>
-            <td class="py-3 px-3 text-center font-semibold text-sky-700">${l}</td>
-            <td class="py-3 px-3 text-center font-semibold text-rose-700">${p}</td>
-            <td class="py-3 px-4 text-right font-bold text-emerald-900">${l + p}</td>
-          </tr>
-        `;
+      tbody.innerHTML = state.demografi.map(r => {
+        sumL += Number(r.laki_laki || 0); sumP += Number(r.perempuan || 0);
+        return `<tr class="hover:bg-emerald-50"><td class="py-3 px-4 font-bold">${r.kategori}</td><td class="py-3 px-3 text-xs text-slate-500">${r.rentang_usia}</td><td class="py-3 px-3 text-center text-sky-700">${r.laki_laki}</td><td class="py-3 px-3 text-center text-rose-700">${r.perempuan}</td><td class="py-3 px-4 text-right font-bold">${Number(r.laki_laki)+Number(r.perempuan)}</td></tr>`;
       }).join('');
-
       const total = sumL + sumP;
-      tfoot.innerHTML = `
-        <tr>
-          <td colspan="2" class="py-3 px-4 rounded-bl-xl">TOTAL PENDUDUK</td>
-          <td class="py-3 px-3 text-center text-sky-800">${sumL}</td>
-          <td class="py-3 px-3 text-center text-rose-800">${sumP}</td>
-          <td class="py-3 px-4 text-right rounded-br-xl text-emerald-900">${total} Jiwa</td>
-        </tr>
-      `;
-
+      tfoot.innerHTML = `<tr><td colspan="2" class="py-3 px-4">TOTAL</td><td class="py-3 px-3 text-center text-sky-800">${sumL}</td><td class="py-3 px-3 text-center text-rose-800">${sumP}</td><td class="py-3 px-4 text-right">${total} Jiwa</td></tr>`;
       document.getElementById('stat-total-warga').textContent = total;
-      document.getElementById('stat-total-laki').textContent = sumL;
-      document.getElementById('stat-total-perempuan').textContent = sumP;
-      document.getElementById('persen-laki').textContent = total ? ((sumL / total) * 100).toFixed(1) + '%' : '0%';
-      document.getElementById('persen-perempuan').textContent = total ? ((sumP / total) * 100).toFixed(1) + '%' : '0%';
 
       const ctx = document.getElementById('chartDemografi').getContext('2d');
       if (chartDemografiInstance) chartDemografiInstance.destroy();
       chartDemografiInstance = new Chart(ctx, {
         type: 'bar',
-        data: {
-          labels: state.demografi.map(d => d.kategori),
-          datasets: [
-            { label: 'Laki-laki', data: state.demografi.map(d => d.laki_laki), backgroundColor: '#0284c7', borderRadius: 6 },
-            { label: 'Perempuan', data: state.demografi.map(d => d.perempuan), backgroundColor: '#e11d48', borderRadius: 6 }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
+        data: { labels: state.demografi.map(d => d.kategori), datasets: [{ label: 'L', data: state.demografi.map(d => d.laki_laki), backgroundColor: '#0284c7' }, { label: 'P', data: state.demografi.map(d => d.perempuan), backgroundColor: '#e11d48' }] },
+        options: { responsive: true, maintainAspectRatio: false }
       });
     }
 
     function renderRT() {
       const container = document.getElementById('rt-cards-container');
       let totalKK = 0;
-
       container.innerHTML = state.rt.map(rt => {
-        const kk = Number(rt.jumlah_kk || 0);
-        const l = Number(rt.laki_laki || 0);
-        const p = Number(rt.perempuan || 0);
-        totalKK += kk;
-        return `
-          <div class="glass-card rounded-2xl p-5 shadow-sm border-l-4 border-emerald-700">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <div>
-                <h3 class="font-extrabold text-emerald-950 text-lg">${rt.nama_rt}</h3>
-                <p class="text-xs text-slate-500"><i class="fa-solid fa-user-tie text-gold-600 mr-1"></i>Ketua RT: <strong class="text-slate-700">${rt.ketua_rt}</strong></p>
-              </div>
-              <div class="bg-gold-400/20 border border-gold-400/50 px-3.5 py-1.5 rounded-xl text-center">
-                <span class="block text-lg font-extrabold text-emerald-950 leading-none">${kk}</span>
-                <span class="text-[10px] font-bold uppercase text-emerald-800">KK</span>
-              </div>
-            </div>
-            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 text-center text-xs">
-              <div class="bg-sky-50 py-2 rounded-lg"><span>Laki-laki</span><br><strong>${l}</strong></div>
-              <div class="bg-rose-50 py-2 rounded-lg"><span>Perempuan</span><br><strong>${p}</strong></div>
-              <div class="bg-emerald-50 py-2 rounded-lg"><span>Total</span><br><strong>${l + p}</strong></div>
-            </div>
-          </div>
-        `;
+        totalKK += Number(rt.jumlah_kk || 0);
+        return `<div class="glass-card rounded-2xl p-5 border-l-4 border-emerald-700"><h3 class="font-extrabold text-emerald-950">${rt.nama_rt}</h3><p class="text-xs text-slate-500">Ketua: ${rt.ketua_rt}</p><p class="text-sm font-bold mt-2">Jumlah KK: ${rt.jumlah_kk}</p></div>`;
       }).join('');
-
       document.getElementById('stat-total-kk').textContent = totalKK;
-      document.getElementById('stat-total-rt').textContent = state.rt.length + ' RT';
-      document.getElementById('badge-jumlah-rt').textContent = state.rt.length + ' Wilayah RT';
-
-      const ctx = document.getElementById('chartRT').getContext('2d');
-      if (chartRTInstance) chartRTInstance.destroy();
-      chartRTInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: state.rt.map(r => r.nama_rt),
-          datasets: [
-            { label: 'Jumlah KK', data: state.rt.map(r => r.jumlah_kk), backgroundColor: '#eab308', borderRadius: 6 },
-            { label: 'Laki-laki', data: state.rt.map(r => r.laki_laki), backgroundColor: '#059669', borderRadius: 6 },
-            { label: 'Perempuan', data: state.rt.map(r => r.perempuan), backgroundColor: '#064e3b', borderRadius: 6 }
-          ]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
-      });
     }
 
     function renderKeuangan() {
       const grid = document.getElementById('grid-keuangan');
-      const filterSelect = document.getElementById('filter-kantong');
-      const currentFilter = filterSelect.value || 'ALL';
-
-      filterSelect.innerHTML = `<option value="ALL">Semua Kantong Kas</option>` +
-        state.kas_kantong.map(k => `<option value="${k.id}" ${currentFilter === k.id ? 'selected' : ''}>${k.nama_kantong}</option>`).join('');
-
       let grandTotal = 0;
-      const kantongMap = {};
-
       grid.innerHTML = state.kas_kantong.map(k => {
-        kantongMap[k.id] = k.nama_kantong;
-        let masuk = 0, keluar = 0;
-        state.kas_transaksi.filter(t => t.kantong_id === k.id).forEach(t => {
-          if (t.jenis === 'masuk') masuk += Number(t.nominal || 0);
-          else keluar += Number(t.nominal || 0);
-        });
-        const saldoAkhir = Number(k.saldo_awal || 0) + masuk - keluar;
-        grandTotal += saldoAkhir;
-
-        return `
-          <div class="glass-card rounded-2xl p-5 shadow-sm border-t-4 border-emerald-700">
-            <h4 class="font-bold text-emerald-950 text-base">${k.nama_kantong}</h4>
-            <p class="text-xs text-slate-500 mt-0.5">${k.keterangan || ''}</p>
-            <div class="mt-4 pt-3 border-t border-slate-100">
-              <span class="text-[11px] text-slate-400 block">Saldo Saat Ini</span>
-              <span class="text-xl font-extrabold text-emerald-800">${formatRupiah(saldoAkhir)}</span>
-            </div>
-          </div>
-        `;
+        grandTotal += Number(k.saldo_awal || 0);
+        return `<div class="glass-card rounded-2xl p-5 border-t-4 border-emerald-700"><h4 class="font-bold text-emerald-950">${k.nama_kantong}</h4><span class="text-xl font-extrabold text-emerald-800">${formatRupiah(k.saldo_awal)}</span></div>`;
       }).join('');
-
       document.getElementById('keuangan-grand-total').textContent = formatRupiah(grandTotal);
-      document.getElementById('stat-total-kas').textContent = formatRupiah(grandTotal);
-
-      const tbody = document.getElementById('tbody-transaksi');
-      const filteredTx = currentFilter === 'ALL' ? state.kas_transaksi : state.kas_transaksi.filter(t => t.kantong_id === currentFilter);
-      tbody.innerHTML = filteredTx.length ? filteredTx.map(t => `
-        <tr class="hover:bg-slate-50">
-          <td class="py-3 px-4 text-xs text-slate-600">${t.tanggal}</td>
-          <td class="py-3 px-4 font-semibold text-emerald-900">${kantongMap[t.kantong_id] || 'Kas'}</td>
-          <td class="py-3 px-4 text-slate-700">${t.keterangan}</td>
-          <td class="py-3 px-4 text-center"><span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${t.jenis === 'masuk' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${t.jenis}</span></td>
-          <td class="py-3 px-4 text-right font-bold ${t.jenis === 'masuk' ? 'text-emerald-700' : 'text-rose-600'}">${formatRupiah(t.nominal)}</td>
-        </tr>
-      `).join('') : `<tr><td colspan="5" class="py-6 text-center text-slate-400 text-xs">Belum ada transaksi.</td></tr>`;
     }
 
-    // ==========================================
-    // FUNGSI UMKM DENGAN PAGINASI (MAX 3 ITEM)
-    // ==========================================
+    // RENDER UMKM DENGAN PAGINASI 3 ITEM
     function renderUMKM() {
       const grid = document.getElementById('grid-umkm');
-      const paginationContainer = document.getElementById('pagination-umkm');
-      
-      const totalItems = state.umkm.length;
-      const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
-      
+      const pagination = document.getElementById('pagination-umkm');
+      const totalPages = Math.ceil(state.umkm.length / itemsPerPage) || 1;
       if (currentPageUmkm > totalPages) currentPageUmkm = totalPages;
-      if (currentPageUmkm < 1) currentPageUmkm = 1;
 
-      const startIndex = (currentPageUmkm - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const paginatedItems = state.umkm.slice(startIndex, endIndex);
-
-      // Render Kartu UMKM
-      grid.innerHTML = paginatedItems.map(u => `
-        <div class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
-          <div class="h-48 bg-emerald-100 relative overflow-hidden">
-            <img src="${u.gambar || 'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=80'}" alt="${u.nama_usaha}" class="w-full h-full object-cover" />
-            <span class="absolute top-3 left-3 bg-emerald-900/90 text-gold-300 text-[11px] font-bold px-3 py-1 rounded-full">${u.kategori}</span>
-          </div>
+      const items = state.umkm.slice((currentPageUmkm - 1) * itemsPerPage, currentPageUmkm * itemsPerPage);
+      grid.innerHTML = items.map(u => `
+        <div class="glass-card rounded-2xl overflow-hidden shadow-sm flex flex-col">
+          <img src="${u.gambar || 'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=800&q=80'}" class="w-full h-48 object-cover" />
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
-              <h3 class="font-extrabold text-emerald-950 text-lg">${u.nama_usaha}</h3>
-              <p class="text-xs font-semibold text-emerald-700 mt-0.5"><i class="fa-solid fa-store mr-1"></i>Pemilik: ${u.pemilik}</p>
-              <p class="text-xs text-slate-600 mt-3 leading-relaxed">${u.deskripsi}</p>
+              <span class="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">${u.kategori}</span>
+              <h3 class="font-extrabold text-emerald-950 text-lg mt-2">${u.nama_usaha}</h3>
+              <p class="text-xs text-slate-600 mt-2">${u.deskripsi}</p>
             </div>
-            <div class="mt-5 pt-3 border-t border-slate-100">
-              <a href="https://wa.me/${String(u.whatsapp || '').replace(/[^0-9]/g, '')}" target="_blank" class="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold flex items-center justify-center gap-2 transition">
-                <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Penjual
-              </a>
-            </div>
+            <a href="https://wa.me/${String(u.whatsapp || '').replace(/[^0-9]/g, '')}" target="_blank" class="mt-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl text-center">WhatsApp Penjual</a>
           </div>
         </div>
       `).join('');
 
-      // Render Tombol Paginasi UMKM
-      if (totalPages <= 1) {
-        paginationContainer.innerHTML = '';
-        return;
-      }
-
-      let paginationHTML = `
-        <button onclick="changePageUmkm(${currentPageUmkm - 1})" ${currentPageUmkm === 1 ? 'disabled class="px-3 py-1.5 rounded-lg border bg-slate-100 text-slate-400 cursor-not-allowed text-xs font-bold"' : 'class="px-3 py-1.5 rounded-lg border bg-white text-emerald-800 hover:bg-emerald-50 text-xs font-bold"'}>
-          <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
-        </button>
-      `;
-
-      for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `
-          <button onclick="changePageUmkm(${i})" class="w-8 h-8 rounded-lg text-xs font-bold transition ${currentPageUmkm === i ? 'bg-emerald-800 text-white' : 'bg-white border text-slate-700 hover:bg-emerald-50'}">
-            ${i}
-          </button>
-        `;
-      }
-
-      paginationHTML += `
-        <button onclick="changePageUmkm(${currentPageUmkm + 1})" ${currentPageUmkm === totalPages ? 'disabled class="px-3 py-1.5 rounded-lg border bg-slate-100 text-slate-400 cursor-not-allowed text-xs font-bold"' : 'class="px-3 py-1.5 rounded-lg border bg-white text-emerald-800 hover:bg-emerald-50 text-xs font-bold"'}>
-          Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>
-        </button>
-      `;
-
-      paginationContainer.innerHTML = paginationHTML;
+      if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+      pagination.innerHTML = `<button onclick="changePageUmkm(${currentPageUmkm - 1})" ${currentPageUmkm === 1 ? 'disabled class="px-3 py-1 bg-slate-100 text-slate-400 text-xs rounded"' : 'class="px-3 py-1 bg-white border text-emerald-800 text-xs rounded"'}>Sebelumnya</button>` +
+        `<span class="text-xs font-bold px-2">Hal ${currentPageUmkm} dari ${totalPages}</span>` +
+        `<button onclick="changePageUmkm(${currentPageUmkm + 1})" ${currentPageUmkm === totalPages ? 'disabled class="px-3 py-1 bg-slate-100 text-slate-400 text-xs rounded"' : 'class="px-3 py-1 bg-white border text-emerald-800 text-xs rounded"'}>Berikutnya</button>`;
     }
-
-    function changePageUmkm(page) {
-      currentPageUmkm = page;
-      renderUMKM();
-      document.getElementById('sec-umkm').scrollIntoView({ behavior: 'smooth' });
-    }
+    function changePageUmkm(p) { currentPageUmkm = p; renderUMKM(); }
 
     function renderJadwal() {
-      const grid = document.getElementById('grid-jadwal');
-      grid.innerHTML = state.jadwal.map(j => `
-        <div class="glass-card rounded-2xl p-5 shadow-sm flex items-start gap-4 border-l-4 border-gold-400">
-          <div class="bg-emerald-800 text-white rounded-xl p-3 text-center min-w-[76px]">
-            <span class="text-[10px] uppercase text-gold-300 block">Agenda</span>
-            <span class="text-xs font-extrabold block mt-0.5">${j.tanggal}</span>
-          </div>
-          <div>
-            <h3 class="font-bold text-emerald-950 text-base">${j.kegiatan}</h3>
-            <p class="text-xs text-slate-600 mt-1"><i class="fa-regular fa-clock text-emerald-600 mr-1"></i>${j.waktu} | <i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i>${j.lokasi}</p>
-          </div>
+      document.getElementById('grid-jadwal').innerHTML = state.jadwal.map(j => `
+        <div class="glass-card rounded-2xl p-5 border-l-4 border-gold-400">
+          <h3 class="font-bold text-emerald-950">${j.kegiatan}</h3>
+          <p class="text-xs text-slate-600 mt-1">${j.tanggal} | ${j.waktu} @ ${j.lokasi}</p>
         </div>
       `).join('');
     }
 
-    // ==========================================
-    // FUNGSI BERITA DENGAN PAGINASI (MAX 3 ITEM)
-    // ==========================================
+    // RENDER BERITA DENGAN PAGINASI 3 ITEM
     function renderBerita() {
       const grid = document.getElementById('grid-berita');
-      const paginationContainer = document.getElementById('pagination-berita');
+      const pagination = document.getElementById('pagination-berita');
       const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
-
-      const totalItems = sorted.length;
-      const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
-
+      const totalPages = Math.ceil(sorted.length / itemsPerPage) || 1;
       if (currentPageBerita > totalPages) currentPageBerita = totalPages;
-      if (currentPageBerita < 1) currentPageBerita = 1;
 
-      const startIndex = (currentPageBerita - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      const paginatedItems = sorted.slice(startIndex, endIndex);
-
-      // Render Kartu Berita
-      grid.innerHTML = paginatedItems.map((b, idx) => {
+      const items = sorted.slice((currentPageBerita - 1) * itemsPerPage, currentPageBerita * itemsPerPage);
+      grid.innerHTML = items.map((b, idx) => {
         const globalIdx = sorted.findIndex(item => item.id === b.id);
         return `
-          <article class="glass-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex flex-col">
-            <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" alt="${b.judul}" class="w-full h-48 object-cover" />
+          <article class="glass-card rounded-2xl overflow-hidden shadow-sm flex flex-col">
+            <img src="${b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80'}" class="w-full h-48 object-cover" />
             <div class="p-5 flex-1 flex flex-col justify-between">
               <div>
-                <span class="text-[11px] font-bold text-emerald-700"><i class="fa-regular fa-calendar mr-1"></i>${b.tanggal}</span>
-                <h3 class="font-extrabold text-slate-900 text-base mt-1.5 line-clamp-2">${b.judul}</h3>
-                <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${b.ringkasan}</p>
+                <span class="text-[11px] font-bold text-emerald-700">${b.tanggal}</span>
+                <h3 class="font-extrabold text-slate-900 text-base mt-1 line-clamp-2">${b.judul}</h3>
+                <p class="text-xs text-slate-600 mt-2 line-clamp-3">${b.ringkasan}</p>
               </div>
-              <button onclick="openBeritaDetail(${globalIdx})" class="mt-4 text-left text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
-                Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
-              </button>
+              <button onclick="openBeritaDetail(${globalIdx})" class="mt-4 text-xs font-bold text-emerald-700">Baca Selengkapnya →</button>
             </div>
           </article>
         `;
       }).join('');
 
-      // Render Tombol Paginasi Berita
-      if (totalPages <= 1) {
-        paginationContainer.innerHTML = '';
-        return;
-      }
-
-      let paginationHTML = `
-        <button onclick="changePageBerita(${currentPageBerita - 1})" ${currentPageBerita === 1 ? 'disabled class="px-3 py-1.5 rounded-lg border bg-slate-100 text-slate-400 cursor-not-allowed text-xs font-bold"' : 'class="px-3 py-1.5 rounded-lg border bg-white text-emerald-800 hover:bg-emerald-50 text-xs font-bold"'}>
-          <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
-        </button>
-      `;
-
-      for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `
-          <button onclick="changePageBerita(${i})" class="w-8 h-8 rounded-lg text-xs font-bold transition ${currentPageBerita === i ? 'bg-emerald-800 text-white' : 'bg-white border text-slate-700 hover:bg-emerald-50'}">
-            ${i}
-          </button>
-        `;
-      }
-
-      paginationHTML += `
-        <button onclick="changePageBerita(${currentPageBerita + 1})" ${currentPageBerita === totalPages ? 'disabled class="px-3 py-1.5 rounded-lg border bg-slate-100 text-slate-400 cursor-not-allowed text-xs font-bold"' : 'class="px-3 py-1.5 rounded-lg border bg-white text-emerald-800 hover:bg-emerald-50 text-xs font-bold"'}>
-          Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>
-        </button>
-      `;
-
-      paginationContainer.innerHTML = paginationHTML;
+      if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+      pagination.innerHTML = `<button onclick="changePageBerita(${currentPageBerita - 1})" ${currentPageBerita === 1 ? 'disabled class="px-3 py-1 bg-slate-100 text-slate-400 text-xs rounded"' : 'class="px-3 py-1 bg-white border text-emerald-800 text-xs rounded"'}>Sebelumnya</button>` +
+        `<span class="text-xs font-bold px-2">Hal ${currentPageBerita} dari ${totalPages}</span>` +
+        `<button onclick="changePageBerita(${currentPageBerita + 1})" ${currentPageBerita === totalPages ? 'disabled class="px-3 py-1 bg-slate-100 text-slate-400 text-xs rounded"' : 'class="px-3 py-1 bg-white border text-emerald-800 text-xs rounded"'}>Berikutnya</button>`;
     }
+    function changePageBerita(p) { currentPageBerita = p; renderBerita(); }
 
-    function changePageBerita(page) {
-      currentPageBerita = page;
-      renderBerita();
-      document.getElementById('sec-berita').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function openBeritaDetail(sortedIdx) {
+    function openBeritaDetail(idx) {
       const sorted = [...state.berita].sort((a, b) => String(b.tanggal).localeCompare(String(a.tanggal)));
-      const b = sorted[sortedIdx];
+      const b = sorted[idx];
       if (!b) return;
-      document.getElementById('detail-berita-img').src = b.gambar || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80';
+      document.getElementById('detail-berita-img').src = b.gambar || '';
       document.getElementById('detail-berita-tgl').textContent = b.tanggal;
       document.getElementById('detail-berita-judul').textContent = b.judul;
       document.getElementById('detail-berita-isi').textContent = b.isi || b.ringkasan;
@@ -973,87 +514,75 @@
     }
 
     function renderStruktur() {
-      const grid = document.getElementById('grid-struktur');
-      grid.innerHTML = state.struktur.map(s => `
-        <div class="glass-card rounded-2xl p-5 shadow-sm flex items-center gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-800 text-gold-300 flex items-center justify-center font-extrabold text-lg shrink-0">
-            <i class="fa-solid fa-user-shield"></i>
-          </div>
-          <div>
-            <span class="text-[11px] font-bold uppercase text-emerald-700 block">${s.jabatan}</span>
-            <h3 class="font-extrabold text-slate-900 text-base">${s.nama}</h3>
-            <span class="text-xs text-slate-500"><i class="fa-solid fa-phone text-gold-600 mr-1"></i>${s.kontak || '-'}</span>
-          </div>
+      document.getElementById('grid-struktur').innerHTML = state.struktur.map(s => `
+        <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-800 text-gold-300 flex items-center justify-center font-bold"><i class="fa-solid fa-user-shield"></i></div>
+          <div><span class="text-[10px] uppercase font-bold text-emerald-700">${s.jabatan}</span><h3 class="font-extrabold text-slate-900">${s.nama}</h3></div>
         </div>
       `).join('');
     }
 
     function renderSosmed() {
       const c = state.config;
-      const items = [
-        { name: 'Instagram', icon: 'fa-instagram', url: c.instagram },
-        { name: 'Facebook', icon: 'fa-facebook', url: c.facebook },
-        { name: 'YouTube', icon: 'fa-youtube', url: c.youtube },
-        { name: 'TikTok', icon: 'fa-tiktok', url: c.tiktok }
-      ];
-      document.getElementById('grid-sosmed').innerHTML = items.map(i => `
-        <a href="${i.url || '#'}" target="_blank" class="bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl p-4 flex items-center gap-3 transition">
-          <i class="fa-brands ${i.icon} text-2xl text-gold-400"></i>
-          <div>
-            <span class="font-bold text-sm block">${i.name}</span>
-            <span class="text-[11px] text-emerald-200">Kunjungi Kanal</span>
-          </div>
-        </a>
-      `).join('');
+      document.getElementById('grid-sosmed').innerHTML = `
+        <a href="${c.instagram}" target="_blank" class="bg-white/10 p-3 rounded-xl text-center text-xs font-bold">Instagram</a>
+        <a href="${c.facebook}" target="_blank" class="bg-white/10 p-3 rounded-xl text-center text-xs font-bold">Facebook</a>
+        <a href="${c.youtube}" target="_blank" class="bg-white/10 p-3 rounded-xl text-center text-xs font-bold">YouTube</a>
+        <a href="${c.tiktok}" target="_blank" class="bg-white/10 p-3 rounded-xl text-center text-xs font-bold">TikTok</a>
+      `;
     }
 
-    // AUTH & MODAL PANEL DEVELOPER
-    function openLoginModal() {
-      if (devAuth) { openDevModal('layout'); return; }
-      document.getElementById('modal-login').classList.remove('hidden');
-    }
+    // LOGIN & CMS DEVELOPER
+    function openLoginModal() { if (devAuth) { openDevModal('profil'); return; } document.getElementById('modal-login').classList.remove('hidden'); }
     function closeLoginModal() { document.getElementById('modal-login').classList.add('hidden'); }
-
     async function handleLogin(e) {
       e.preventDefault();
-      const username = document.getElementById('login-user').value.trim();
-      const password = document.getElementById('login-pass').value.trim();
-      if (username === 'admin' && password === 'ngrombeh2026') {
-        devAuth = { username, password };
+      if (document.getElementById('login-user').value === 'admin' && document.getElementById('login-pass').value === 'ngrombeh2026') {
+        devAuth = { username: 'admin', password: 'ngrombeh2026' };
         sessionStorage.setItem('ngrombeh_dev_auth', JSON.stringify(devAuth));
         document.getElementById('dev-toolbar').classList.remove('hidden');
         closeLoginModal();
-      } else {
-        alert('Login gagal. Gunakan admin / ngrombeh2026');
-      }
+        openDevModal('profil');
+      } else { alert('Login salah! Gunakan admin / ngrombeh2026'); }
     }
-
-    function logoutDeveloper() {
-      devAuth = null;
-      sessionStorage.removeItem('ngrombeh_dev_auth');
-      document.getElementById('dev-toolbar').classList.add('hidden');
-      closeDevModal();
-    }
-
-    function openDevModal(tab = 'layout') {
-      document.getElementById('modal-dev').classList.remove('hidden');
-      switchDevTab(tab);
-    }
+    function logoutDeveloper() { devAuth = null; sessionStorage.removeItem('ngrombeh_dev_auth'); document.getElementById('dev-toolbar').classList.add('hidden'); closeDevModal(); }
+    function openDevModal(tab) { document.getElementById('modal-dev').classList.remove('hidden'); switchDevTab(tab); }
     function closeDevModal() { document.getElementById('modal-dev').classList.add('hidden'); }
 
     function switchDevTab(tab) {
-      document.querySelectorAll('.dev-tab-btn').forEach(b => {
-        b.classList.remove('bg-emerald-800', 'text-white');
-        b.classList.add('bg-white', 'text-slate-700');
-      });
+      document.querySelectorAll('.dev-tab-btn').forEach(b => { b.classList.remove('bg-emerald-800', 'text-white'); b.classList.add('bg-white', 'text-slate-700'); });
       document.getElementById('tab-btn-' + tab)?.classList.remove('bg-white', 'text-slate-700');
       document.getElementById('tab-btn-' + tab)?.classList.add('bg-emerald-800', 'text-white');
-      
-      document.getElementById('dev-tab-content').innerHTML = `
-        <div class="bg-white p-6 rounded-xl border text-center">
-          <p class="text-sm font-semibold text-slate-600">Panel Developer aktif. Ubah data sesuai kebutuhan lalu sinkronkan.</p>
-        </div>
-      `;
+
+      const box = document.getElementById('dev-tab-content');
+      if (tab === 'profil') {
+        box.innerHTML = `<div class="space-y-3 text-xs"><h4 class="font-bold">Edit Profil</h4><input id="cfg-nama" value="${state.config.nama_dusun}" class="w-full p-2 border rounded" /><input id="cfg-wilayah" value="${state.config.wilayah}" class="w-full p-2 border rounded" /><button onclick="saveConfig()" class="px-4 py-2 bg-emerald-800 text-white rounded font-bold">Simpan</button></div>`;
+      } else if (tab === 'umkm') {
+        box.innerHTML = `<h4 class="font-bold text-xs">Kelola UMKM</h4><div class="space-y-2">${state.umkm.map((u,i)=>`<div class="flex gap-2"><input value="${u.nama_usaha}" onchange="state.umkm[${i}].nama_usaha=this.value" class="w-full p-1 border rounded text-xs" /><button onclick="state.umkm.splice(${i},1);switchDevTab('umkm')" class="text-rose-600 font-bold">Hapus</button></div>`).join('')}</div><button onclick="state.umkm.push({id:'u'+Date.now(),nama_usaha:'Baru',whatsapp:'628'});switchDevTab('umkm')" class="mt-2 px-3 py-1 bg-gold-400 text-xs font-bold rounded">+ Tambah</button><div class="mt-4"><button onclick="saveToSheet('UMKM', state.umkm)" class="px-4 py-2 bg-emerald-800 text-white text-xs font-bold rounded">Simpan ke Spreadsheet</button></div>`;
+      } else if (tab === 'berita') {
+        box.innerHTML = `<h4 class="font-bold text-xs">Kelola Berita</h4><div class="space-y-2">${state.berita.map((b,i)=>`<div class="flex gap-2"><input value="${b.judul}" onchange="state.berita[${i}].judul=this.value" class="w-full p-1 border rounded text-xs" /><button onclick="state.berita.splice(${i},1);switchDevTab('berita')" class="text-rose-600 font-bold">Hapus</button></div>`).join('')}</div><button onclick="state.berita.push({id:'b'+Date.now(),tanggal:new Date().toISOString().slice(0,10),judul:'Berita Baru',ringkasan:'Isi'});switchDevTab('berita')" class="mt-2 px-3 py-1 bg-gold-400 text-xs font-bold rounded">+ Tambah</button><div class="mt-4"><button onclick="saveToSheet('Berita', state.berita)" class="px-4 py-2 bg-emerald-800 text-white text-xs font-bold rounded">Simpan ke Spreadsheet</button></div>`;
+      } else if (tab === 'settings') {
+        box.innerHTML = `<div class="space-y-3 text-xs"><div><label class="font-bold block mb-1">URL Web App Google Apps Script</label><input id="set-url" value="${getGasUrl()}" class="w-full p-2 border rounded font-mono" /></div><button onclick="localStorage.setItem('ngrombeh_gas_url',document.getElementById('set-url').value.trim());alert('Tersimpan!');refreshFromSheet();" class="px-4 py-2 bg-emerald-800 text-white font-bold rounded">Simpan URL</button></div>`;
+      }
+    }
+
+    function saveConfig() {
+      state.config.nama_dusun = document.getElementById('cfg-nama').value;
+      state.config.wilayah = document.getElementById('cfg-wilayah').value;
+      saveToSheet('Config', state.config);
+    }
+
+    async function saveToSheet(target, dataPayload) {
+      renderAll();
+      const url = getGasUrl();
+      if (!url) { alert('URL Spreadsheet belum disetting di Tab Akun & URL Sheet!'); return; }
+      showSync('Menyimpan ke Spreadsheet...');
+      try {
+        const res = await fetch(url, { method: 'POST', body: JSON.stringify({ action: 'saveSection', username: devAuth.username, password: devAuth.password, target, data: dataPayload }) });
+        const json = await res.json();
+        showSync(json.message, true);
+        alert(json.message);
+      } catch (e) { showSync('Gagal menyimpan.', true); }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
